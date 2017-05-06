@@ -42,11 +42,11 @@ export class PictureItCtrl extends MetricsPanelCtrl  {
   
   addSensor() {
 	if (this.panel.sensors.length==0)
-		this.panel.sensors.push({name: 'A-series', xlocation: 200,ylocation: 200,format: '%.2f',bgcolor:'rgba(0, 0, 0, 0.58)',color:'#FFFFFF',size:22, bordercolor:'rgb(251, 4, 4)',visible:true});
+		this.panel.sensors.push({name: 'A-series', xlocation: 200,ylocation: 200, width: 100, height: 100, format: '%.2f',bgcolor:'rgba(0, 0, 0, 0.58)',color:'#FFFFFF',size:22, bordercolor:'rgb(251, 4, 4)',visible:true});
 	else {
 		var lastSensor=this.panel.sensors[this.panel.sensors.length-1];
 	
-		this.panel.sensors.push({name: lastSensor.name, xlocation: 200,ylocation: 200,format: lastSensor.format,bgcolor:lastSensor.bgcolor,color:lastSensor.color,size:lastSensor.size, bordercolor:lastSensor.bordercolor,visible:true});
+		this.panel.sensors.push({name: lastSensor.name, xlocation: 200,ylocation: 200, width: lastSensor.width, height: lastSensor.height, format: lastSensor.format, bgcolor:lastSensor.bgcolor, color:lastSensor.color, size:lastSensor.size, bordercolor:lastSensor.bordercolor, visible:true});
 	}
   }
   
@@ -74,11 +74,16 @@ export class PictureItCtrl extends MetricsPanelCtrl  {
 	  
 	  var sensorsLength = sensors.length;
 	  var valueMapsLength = valueMaps.length;
+	  var padding = 5;
 	  
 	  for (var sensor=0;sensor<sensorsLength;sensor++) {
 		sensors[sensor].visible = sensors[sensor].xlocation<width && sensors[sensor].ylocation<height;
 		sensors[sensor].ylocationStr=sensors[sensor].ylocation.toString()+"px";
 		sensors[sensor].xlocationStr=sensors[sensor].xlocation.toString()+"px";
+		sensors[sensor].widthStr=sensors[sensor].width.toString()+"px";
+		sensors[sensor].heightStr=sensors[sensor].height.toString()+"px";
+		sensors[sensor].lineHeightStr=(sensors[sensor].height-(2*padding)).toString()+"px";
+		sensors[sensor].paddingStr=padding.toString()+"px";
 		sensors[sensor].sizeStr=sensors[sensor].size.toString()+"px";
 		for (var valueMap=0;valueMap<valueMapsLength;valueMap++) {	
 			if (sensors[sensor].name==valueMaps[valueMap].name) {
