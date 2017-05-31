@@ -2,6 +2,7 @@ import _ from 'lodash';
 import {MetricsPanelCtrl} from 'app/plugins/sdk';
 import './sprintf.js';
 import './angular-sprintf.js';
+import kbn from 'app/core/utils/kbn';
 
 const panelDefaults = {
 	valueMaps: [],
@@ -20,9 +21,11 @@ export class PictureItCtrl extends MetricsPanelCtrl  {
     super($scope, $injector);
     _.defaults(this.panel, panelDefaults);
 
+    this.unitFormats = kbn.getUnitFormats();
+
     this.events.on('init-edit-mode', this.onInitEditMode.bind(this));
     this.events.on('panel-initialized', this.render.bind(this));
-	this.events.on('data-received', this.onDataReceived.bind(this));
+    this.events.on('data-received', this.onDataReceived.bind(this));
     this.events.on('data-snapshot-load', this.onDataReceived.bind(this));
   }
 
@@ -42,51 +45,56 @@ export class PictureItCtrl extends MetricsPanelCtrl  {
   
   addSensor() {
 	if (this.panel.sensors.length==0)
-		this.panel.sensors.push({name: 'A-series', xlocation: 200,ylocation: 200,format: '%.2f',bgcolor:'rgba(0, 0, 0, 0.58)',color:'#FFFFFF',size:22, bordercolor:'rgb(251, 4, 4)',visible:true});
+		this.panel.sensors.push({name: 'A-series', xlocation: 200,ylocation: 200,format: 'none', decimals: 'auto',bgcolor:'rgba(0, 0, 0, 0.58)',color:'#FFFFFF',size:22, bordercolor:'rgb(251, 4, 4)',visible:true});
 	else {
 		var lastSensor=this.panel.sensors[this.panel.sensors.length-1];
 	
-		this.panel.sensors.push({name: lastSensor.name, xlocation: 200,ylocation: 200,format: lastSensor.format,bgcolor:lastSensor.bgcolor,color:lastSensor.color,size:lastSensor.size, bordercolor:lastSensor.bordercolor,visible:true});
+		this.panel.sensors.push({name: lastSensor.name, xlocation: 200,ylocation: 200,format: lastSensor.format, decimals: lastSensor.decimals,bgcolor:lastSensor.bgcolor,color:lastSensor.color,size:lastSensor.size, bordercolor:lastSensor.bordercolor,visible:true});
 	}
   }
   
+  setUnitFormat(subItem, index) {
+  	this.panel.sensors[index].format = subItem.value;
+  }
+
   onInitEditMode() {
     this.addEditorTab('Options', 'public/plugins/bessler-pictureit-panel/editor.html', 2);
   }
 	
   link(scope, elem, attrs, ctrl) {
     var sensors;
-	var valueMaps;
+    var valueMaps;
 
-	const $panelContainer = elem.find('.panel-container');
+    const $panelContainer = elem.find('.panel-container');
 
-	function pixelStrToNum(str) {
-		return parseInt(str.substr(0,str.length-2));
-	}
+    function pixelStrToNum(str) {
+        return parseInt(str.substr(0,str.length-2));
+    }
 	
     function render() {
-      if (!ctrl.panel.sensors) { return; }
-	  var width = pixelStrToNum($panelContainer.css("width"));
-	  var height = pixelStrToNum($panelContainer.css("height"));
+        if (!ctrl.panel.sensors) { return; }
+	
+        var width = pixelStrToNum($panelContainer.css("width"));
+        var height = pixelStrToNum($panelContainer.css("height"));
 	  
-      sensors = ctrl.panel.sensors;	  
-	  valueMaps = ctrl.panel.valueMaps;
+        sensors = ctrl.panel.sensors;	  
+	valueMaps = ctrl.panel.valueMaps;
 	  
-	  var sensorsLength = sensors.length;
-	  var valueMapsLength = valueMaps.length;
+	var sensorsLength = sensors.length;
+	var valueMapsLength = valueMaps.length;
 	  
-	  for (var sensor=0;sensor<sensorsLength;sensor++) {
-		sensors[sensor].visible = sensors[sensor].xlocation<width && sensors[sensor].ylocation<height;
-		sensors[sensor].ylocationStr=sensors[sensor].ylocation.toString()+"px";
-		sensors[sensor].xlocationStr=sensors[sensor].xlocation.toString()+"px";
-		sensors[sensor].sizeStr=sensors[sensor].size.toString()+"px";
-		for (var valueMap=0;valueMap<valueMapsLength;valueMap++) {	
-			if (sensors[sensor].name==valueMaps[valueMap].name) {
-				sensors[sensor].valueFormatted=sprintf(sensors[sensor].format,valueMaps[valueMap].value);
-				break;
-			}
+	for (var sensor=0;sensor<sensorsLength;sensor++) {
+            sensors[sensor].visible = sensors[sensor].xlocation<width && sensors[sensor].ylocation<height;
+            sensors[sensor].ylocationStr=sensors[sensor].ylocation.toString()+"px";
+            sensors[sensor].xlocationStr=sensors[sensor].xlocation.toString()+"px";
+            sensors[sensor].sizeStr=sensors[sensor].size.toString()+"px";
+            for (var valueMap=0;valueMap<valueMapsLength;valueMap++) {	
+                if (sensors[sensor].name==valueMaps[valueMap].name) {
+                    sensors[sensor].valueFormatted = kbn.valueFormats[sensors[sensor].format](valueMaps[valueMap].value,sensors[sensor].decimals, null);
+		break;
 		}
-	  }
+            }
+	}
     }
 
     this.events.on('render', function() {
