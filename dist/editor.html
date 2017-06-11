@@ -16,49 +16,36 @@
 		</div>
 		<div class="section gf-form-group">
 			<h5 class="section-heading">Metric</h5>
-			<div class="gf-form-inline">				
-				<div class="gf-form">
-					<label class="gf-form-label width-8">Name</label>
-					<input type="text" class="input-small gf-form-input max-width-40" ng-model="sensor.name" ng-change="ctrl.render()" ng-model-onblur />
-				</div>
+			<div class="gf-form" max-width-25>				
+                                <label class="gf-form-label width-5">Name</label>
+                                <input type="text" class="input-small gf-form-input " ng-model="sensor.name" ng-change="ctrl.render()" ng-model-onblur />
 			</div>
-			<div class="gf-form-inline">
-				<div class="gf-form">
-					<label class="gf-form-label width-8">Unit</label>
-					<input type="text" class="input-small gf-form-input max-width-40" ng-model="sensor.valueUnit" ng-change="ctrl.render()" ng-model-onblur />
-				</div>
+			<div class="gf-form">
+                                <label class="gf-form-label width-5">Unit</label>
+                                <div class="gf-form-dropdown-typeahead width-15" ng-model="sensor.format" dropdown-typeahead2="ctrl.unitFormats" dropdown-typeahead-on-select="ctrl.setUnitFormat($subItem,$index)"></div>
 			</div>
 		</div>
 		<div class="section gf-form-group">
 			<h5 class="section-heading">Position</h5>
-			<div class="gf-form-inline">
-				<div class="gf-form">
-					<label class="gf-form-label width-8">X Location</label>
-					<input type="number" class="input-small gf-form-input width-8" ng-model="sensor.xlocation" ng-change="ctrl.render()" />
-				</div>
+			<div class="gf-form">
+                                <label class="gf-form-label width-8">X Location</label>
+                                <input type="number" class="input-small gf-form-input width-6" ng-model="sensor.xlocation" ng-change="ctrl.render()" />
 			</div>
-			<div class="gf-form-inline">
-				<div class="gf-form">
-
-					<label class="gf-form-label width-8">Y Location</label>
-					<input type="number" class="input-small gf-form-input width-8" ng-model="sensor.ylocation" ng-change="ctrl.render()" />
-				</div>
+			<div class="gf-form">
+				<label class="gf-form-label width-8">Y Location</label>
+				<input type="number" class="input-small gf-form-input width-6" ng-model="sensor.ylocation" ng-change="ctrl.render()" />
 			</div>
 		</div>
 
 		<div class="section gf-form-group">
 			<h5 class="section-heading">Link</h5>
-			<div class="gf-form-inline">
-				<div class="gf-form">
-					<label class="gf-form-label width-8">Url (absolute)</label>
-					<input type="text" class="input-small gf-form-input width-30" ng-model="sensor.link_url" ng-change="ctrl.render()" ng-model-onblur />
-				</div>
+			<div class="gf-form">
+                                <label class="gf-form-label width-8">Url (absolute)</label>
+                                <input type="text" class="input-small gf-form-input width-30" ng-model="sensor.link_url" ng-change="ctrl.render()" ng-model-onblur />
 			</div>
-			<div class="gf-form-inline">
-				<div class="gf-form">
-					<label class="gf-form-label width-8">Hover text</label>
-					<input type="text" class="input-small gf-form-input width-30" ng-model="sensor.link_hover" ng-change="ctrl.render()" ng-model-onblur />
-				</div>
+			<div class="gf-form">
+                                <label class="gf-form-label width-8">Hover text</label>
+                                <input type="text" class="input-small gf-form-input width-30" ng-model="sensor.link_hover" ng-change="ctrl.render()" ng-model-onblur />
 			</div>
 		</div>
 
@@ -66,13 +53,15 @@
 			<h5 class="section-heading">Appearance</h5>
 			<div class="gf-form-inline">
 				<div class="gf-form">
-					<label class="gf-form-label width-8">Format</label>
-					<input type="text" class="input-small gf-form-input width-8" ng-model="sensor.format" ng-change="ctrl.render()" />
-					<label class="gf-form-label width-8">Font Color</label>
+					<label class="gf-form-label width-8">Decimals</label>
+					<input type="number" class="gf-form-input width-5" placeholder="auto" bs-tooltip="'Override automatic decimal precision'" data-placement="right" ng-model="sensor.decimals" ng-change="ctrl.render()" ng-model-onblur>
+
+                                        <label class="gf-form-label width-8">Font Color</label>
 					<span class="gf-form-label">
 						<spectrum-picker ng-model="sensor.color" ng-change="ctrl.render()" ></spectrum-picker>
 					</span>
-					<label class="gf-form-label width-8">Border Color</label>
+					
+                                        <label class="gf-form-label width-8">Border Color</label>
 					<span class="gf-form-label">
 						<spectrum-picker ng-model="sensor.bordercolor" ng-change="ctrl.render()" ></spectrum-picker>
 					</span>
@@ -81,8 +70,9 @@
 			<div class="gf-form-inline">
 				<div class="gf-form">
 					<label class="gf-form-label width-8">Font Size</label>
-					<input type="number" class="input-small gf-form-input width-8" ng-model="sensor.size" ng-change="ctrl.render()" />
-										<label class="gf-form-label width-8">Background</label>
+					<input type="number" class="input-small gf-form-input width-5" ng-model="sensor.size" ng-change="ctrl.render()" />
+					
+                                        <label class="gf-form-label width-8">Background</label>
 					<span class="gf-form-label">
 						<spectrum-picker ng-model="sensor.bgcolor" ng-change="ctrl.render()" ></spectrum-picker>
 					</span
