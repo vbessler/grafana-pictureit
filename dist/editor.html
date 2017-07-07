@@ -27,13 +27,35 @@
 		</div>
 		<div class="section gf-form-group">
 			<h5 class="section-heading">Position</h5>
-			<div class="gf-form">
-                                <label class="gf-form-label width-8">X Location</label>
-                                <input type="number" class="input-small gf-form-input width-6" ng-model="sensor.xlocation" ng-change="ctrl.render()" />
-			</div>
-			<div class="gf-form">
-				<label class="gf-form-label width-8">Y Location</label>
-				<input type="number" class="input-small gf-form-input width-6" ng-model="sensor.ylocation" ng-change="ctrl.render()" />
+                        <div class="gf-form-inline">
+                                <div class="gf-form">
+                                        <label class="gf-form-label width-8">X Location</label>
+                                        <input type="number" class="input-small gf-form-input width-6" ng-model="sensor.xlocation" ng-change="ctrl.render()" />
+                                </div>
+                                <div class="gf-form">
+                                        <label class="gf-form-label width-8">Width</label>
+                                        <input type="number" class="input-small gf-form-input width-6" ng-model="sensor.width" ng-change="ctrl.render()" />
+                                </div>
+                                <div class="gf-form">
+                                        <label class="gf-form-label width-8">Text Align</label>
+                                        <select class="gf-form-input width-8" ng-model="sensor.textAlign" ng-options="f for f in ['left', 'center', 'right'] " ng-change="ctrl.render()">
+                                        </select>
+                                </div>
+                        </div>
+                        <div class="gf-form-inline">
+                                <div class="gf-form">
+                                        <label class="gf-form-label width-8">Y Location</label>
+                                        <input type="number" class="input-small gf-form-input width-6" ng-model="sensor.ylocation" ng-change="ctrl.render()" />
+                                </div>
+                                <div class="gf-form">
+                                        <label class="gf-form-label width-8">Height</label>
+                                        <input type="number" class="input-small gf-form-input width-6" ng-model="sensor.height" ng-change="ctrl.render()" />
+                                </div>
+                                <div class="gf-form">
+                                        <label class="gf-form-label width-8">Vertical Align</label>
+                                        <select class="gf-form-input width-8" ng-model="sensor.verticalAlign" ng-options="f for f in ['top', 'middle', 'bottom'] " ng-change="ctrl.render()">
+                                        </select>
+                                </div>
 			</div>
 		</div>
 

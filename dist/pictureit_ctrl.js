@@ -110,10 +110,10 @@ System.register(['lodash', 'app/plugins/sdk', './sprintf.js', './angular-sprintf
         }, {
           key: 'addSensor',
           value: function addSensor() {
-            if (this.panel.sensors.length == 0) this.panel.sensors.push({ name: 'A-series', xlocation: 200, ylocation: 200, format: 'none', decimals: 'auto', bgcolors: ["rgba(50, 172, 45, 0.97)","rgba(237, 129, 40, 0.89)","rgba(245, 54, 54, 0.9)"], fgcolors: ["white","white","white"], size: 22, bordercolor: 'rgb(251, 4, 4)', visible: true });else {
+            if (this.panel.sensors.length == 0) this.panel.sensors.push({ name: 'A-series', xlocation: 200, ylocation: 200, format: 'none', decimals: 'auto', bgcolors: ["rgba(50, 172, 45, 0.97)","rgba(237, 129, 40, 0.89)","rgba(245, 54, 54, 0.9)"], fgcolors: ["white","white","white"], size: 22, bordercolor: 'rgb(251, 4, 4)', textAlign: 'left', verticalAlign: 'top', visible: true });else {
               var lastSensor = this.panel.sensors[this.panel.sensors.length - 1];
 
-              this.panel.sensors.push({ name: lastSensor.name, xlocation: 200, ylocation: 200, format: lastSensor.format, decimals: lastSensor.decimals, bgcolors: lastSensor.bgcolors, fgcolors: lastSensor.fgcolors, size: lastSensor.size, bordercolor: lastSensor.bordercolor, visible: true });
+              this.panel.sensors.push({ name: lastSensor.name, xlocation: 200, ylocation: 200, format: lastSensor.format, decimals: lastSensor.decimals, bgcolors: lastSensor.bgcolors, fgcolors: lastSensor.fgcolors, size: lastSensor.size, bordercolor: lastSensor.bordercolor, textAlign: 'left', verticalAlign: 'top', visible: true });
             }
           }
         }, {
@@ -157,6 +157,18 @@ System.register(['lodash', 'app/plugins/sdk', './sprintf.js', './angular-sprintf
                 sensors[sensor].ylocationStr = sensors[sensor].ylocation.toString() + "px";
                 sensors[sensor].xlocationStr = sensors[sensor].xlocation.toString() + "px";
                 sensors[sensor].sizeStr = sensors[sensor].size.toString() + "px";
+                if (0 < sensors[sensor].width) {
+                  sensors[sensor].widthStr = sensors[sensor].width.toString() + "px";
+                }
+                else {
+                  sensors[sensor].widthStr = "auto";
+                }
+                if (0 < sensors[sensor].height) {
+                  sensors[sensor].heightStr = sensors[sensor].height.toString() + "px";
+                }
+                else {
+                  sensors[sensor].heightStr = "auto";
+                }
                 for (var valueMap = 0; valueMap < valueMapsLength; valueMap++) {
                   if (sensors[sensor].name == valueMaps[valueMap].name) {
                     var vmv = valueMaps[valueMap].value;
