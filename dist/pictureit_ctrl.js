@@ -110,7 +110,7 @@ System.register(['lodash', 'app/plugins/sdk', './sprintf.js', './angular-sprintf
         }, {
           key: 'addSensor',
           value: function addSensor() {
-            if (this.panel.sensors.length == 0) this.panel.sensors.push({ name: 'A-series', xlocation: 200, ylocation: 200, format: 'none', decimals: 'auto', bgcolor: 'rgba(0, 0, 0, 0.58)', color: '#FFFFFF', size: 22, bordercolor: 'rgb(251, 4, 4)', visible: true });else {
+            if (this.panel.sensors.length == 0) this.panel.sensors.push({ name: 'A-series', xlocation: 200, ylocation: 200, format: 'none', decimals: '', bgcolor: 'rgba(0, 0, 0, 0.58)', color: '#FFFFFF', size: 22, bordercolor: 'rgb(251, 4, 4)', visible: true });else {
               var lastSensor = this.panel.sensors[this.panel.sensors.length - 1];
 
               this.panel.sensors.push({ name: lastSensor.name, xlocation: 200, ylocation: 200, format: lastSensor.format, decimals: lastSensor.decimals, bgcolor: lastSensor.bgcolor, color: lastSensor.color, size: lastSensor.size, bordercolor: lastSensor.bordercolor, visible: true });
