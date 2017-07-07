@@ -57,9 +57,15 @@
 					<input type="number" class="gf-form-input width-5" placeholder="auto" bs-tooltip="'Override automatic decimal precision'" data-placement="right" ng-model="sensor.decimals" ng-change="ctrl.render()" ng-model-onblur>
 
                                         <label class="gf-form-label width-8">Font Color</label>
-					<span class="gf-form-label">
-						<spectrum-picker ng-model="sensor.color" ng-change="ctrl.render()" ></spectrum-picker>
-					</span>
+                                        <span class="gf-form-label">
+                                                <spectrum-picker ng-model="sensor.fgcolors[0]" ng-change="ctrl.render()" ></spectrum-picker>
+                                        </span>
+                                        <span class="gf-form-label">
+                                                <spectrum-picker ng-model="sensor.fgcolors[1]" ng-change="ctrl.render()" ></spectrum-picker>
+                                        </span>
+                                        <span class="gf-form-label">
+                                                <spectrum-picker ng-model="sensor.fgcolors[2]" ng-change="ctrl.render()" ></spectrum-picker>
+                                        </span>
 					
                                         <label class="gf-form-label width-8">Border Color</label>
 					<span class="gf-form-label">
@@ -73,11 +79,23 @@
 					<input type="number" class="input-small gf-form-input width-5" ng-model="sensor.size" ng-change="ctrl.render()" />
 					
                                         <label class="gf-form-label width-8">Background</label>
-					<span class="gf-form-label">
-						<spectrum-picker ng-model="sensor.bgcolor" ng-change="ctrl.render()" ></spectrum-picker>
-					</span
+                                        <span class="gf-form-label">
+                                                <spectrum-picker ng-model="sensor.bgcolors[0]" ng-change="ctrl.render()" ></spectrum-picker>
+                                        </span>
+                                        <span class="gf-form-label">
+                                                <spectrum-picker ng-model="sensor.bgcolors[1]" ng-change="ctrl.render()" ></spectrum-picker>
+                                        </span>
+                                        <span class="gf-form-label">
+                                                <spectrum-picker ng-model="sensor.bgcolors[2]" ng-change="ctrl.render()" ></spectrum-picker>
+                                        </span>
 				</div>
 			</div>
+                        <div class="gf-form-inline">
+                                <div class="gf-form">
+                                        <label class="gf-form-label width-8">Thresholds<tip> Define two threshold values&lt;br /&gt; 50,80 will produce: &lt;50 = Green, 50:80 = Yellow, &gt;80 = Red</tip></label>
+                                        <input type="text" class="input-small gf-form-input width-13" ng-model="sensor.thresholds" ng-change="ctrl.render()" placeholder="50,80" />
+                                </div>
+                        </div>
 		</div>
 	</div>
 </div>

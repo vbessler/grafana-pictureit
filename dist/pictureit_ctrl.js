@@ -110,10 +110,10 @@ System.register(['lodash', 'app/plugins/sdk', './sprintf.js', './angular-sprintf
         }, {
           key: 'addSensor',
           value: function addSensor() {
-            if (this.panel.sensors.length == 0) this.panel.sensors.push({ name: 'A-series', xlocation: 200, ylocation: 200, format: 'none', decimals: 'auto', bgcolor: 'rgba(0, 0, 0, 0.58)', color: '#FFFFFF', size: 22, bordercolor: 'rgb(251, 4, 4)', visible: true });else {
+            if (this.panel.sensors.length == 0) this.panel.sensors.push({ name: 'A-series', xlocation: 200, ylocation: 200, format: 'none', decimals: 'auto', bgcolors: ["rgba(50, 172, 45, 0.97)","rgba(237, 129, 40, 0.89)","rgba(245, 54, 54, 0.9)"], fgcolors: ["white","white","white"], size: 22, bordercolor: 'rgb(251, 4, 4)', visible: true });else {
               var lastSensor = this.panel.sensors[this.panel.sensors.length - 1];
 
-              this.panel.sensors.push({ name: lastSensor.name, xlocation: 200, ylocation: 200, format: lastSensor.format, decimals: lastSensor.decimals, bgcolor: lastSensor.bgcolor, color: lastSensor.color, size: lastSensor.size, bordercolor: lastSensor.bordercolor, visible: true });
+              this.panel.sensors.push({ name: lastSensor.name, xlocation: 200, ylocation: 200, format: lastSensor.format, decimals: lastSensor.decimals, bgcolors: lastSensor.bgcolors, fgcolors: lastSensor.fgcolors, size: lastSensor.size, bordercolor: lastSensor.bordercolor, visible: true });
             }
           }
         }, {
@@ -159,7 +159,27 @@ System.register(['lodash', 'app/plugins/sdk', './sprintf.js', './angular-sprintf
                 sensors[sensor].sizeStr = sensors[sensor].size.toString() + "px";
                 for (var valueMap = 0; valueMap < valueMapsLength; valueMap++) {
                   if (sensors[sensor].name == valueMaps[valueMap].name) {
-                    sensors[sensor].valueFormatted = kbn.valueFormats[sensors[sensor].format](valueMaps[valueMap].value, sensors[sensor].decimals, null);
+                    var vmv = valueMaps[valueMap].value;
+                    sensors[sensor].valueFormatted = kbn.valueFormats[sensors[sensor].format](vmv, sensors[sensor].decimals, null);
+                    if (typeof sensors[sensor].thresholds === "undefined") {
+                      sensors[sensor].fgcolorStr = sensors[sensor].fgcolors[0];
+                      sensors[sensor].bgcolorStr = sensors[sensor].bgcolors[0];
+                    }
+                    else {
+                      var th = sensors[sensor].thresholds.split(",");
+                      if (vmv < th[0]) {
+                        sensors[sensor].fgcolorStr = sensors[sensor].fgcolors[0];
+                        sensors[sensor].bgcolorStr = sensors[sensor].bgcolors[0];
+                      }
+                      else if (vmv <= th[1]) {
+                        sensors[sensor].fgcolorStr = sensors[sensor].fgcolors[1];
+                        sensors[sensor].bgcolorStr = sensors[sensor].bgcolors[1];
+                      }
+                      else {
+                        sensors[sensor].fgcolorStr = sensors[sensor].fgcolors[2];
+                        sensors[sensor].bgcolorStr = sensors[sensor].bgcolors[2];
+                      }
+                    }
                     break;
                   }
                 }
