@@ -20,7 +20,7 @@ export class PictureItCtrl extends MetricsPanelCtrl  {
   constructor($scope, $injector) {
     super($scope, $injector);
     _.defaults(this.panel, panelDefaults);
-
+    this.sensorValues = new Object();
     this.unitFormats = kbn.getUnitFormats();
 
     this.events.on('init-edit-mode', this.onInitEditMode.bind(this));
@@ -30,10 +30,11 @@ export class PictureItCtrl extends MetricsPanelCtrl  {
   }
 
   onDataReceived(dataList) {	
+    this.sensorValues = new Object();
 	var dataListLength = dataList.length;
-	this.panel.valueMaps=[];
 	for (var series=0;series<dataListLength;series++) {		
-		this.panel.valueMaps.push({name:dataList[series].target,value:dataList[series].datapoints[dataList[series].datapoints.length-1][0]});
+    var data = dataList[series];
+    this.sensorValues[data.target] = data.datapoints[data.datapoints.length-1][0];
 	}
 	
     this.render();
@@ -54,7 +55,7 @@ export class PictureItCtrl extends MetricsPanelCtrl  {
   }
   
   setUnitFormat(subItem, index) {
-  	this.panel.sensors[index].format = subItem.value;
+    this.panel.sensors[index].format = subItem.value;
   }
 
   onInitEditMode() {
@@ -88,11 +89,10 @@ export class PictureItCtrl extends MetricsPanelCtrl  {
             sensors[sensor].ylocationStr=sensors[sensor].ylocation.toString()+"px";
             sensors[sensor].xlocationStr=sensors[sensor].xlocation.toString()+"px";
             sensors[sensor].sizeStr=sensors[sensor].size.toString()+"px";
-            for (var valueMap=0;valueMap<valueMapsLength;valueMap++) {	
-                if (sensors[sensor].name==valueMaps[valueMap].name) {
-                    sensors[sensor].valueFormatted = kbn.valueFormats[sensors[sensor].format](valueMaps[valueMap].value,sensors[sensor].decimals, null);
-		break;
-		}
+            var name = sensors[sensor].name;
+            if(ctrl.sensorValues.hasOwnProperty(name)) {
+              var value = ctrl.sensorValues[name];
+              ctrl.sensorValues[name] = kbn.valueFormats[sensors[sensor].format](value, sensors[sensor].decimals, null);
             }
 	}
     }
