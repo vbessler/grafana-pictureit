@@ -16,6 +16,11 @@
 		</div>
 		<div class="section gf-form-group">
 			<h5 class="section-heading">Metric</h5>
+            <div class="gf-form" max-width-25>
+                <label class="gf-form-label width-5">Label</label>
+                <input type="text" class="input-small gf-form-input " ng-model="sensor.label" ng-change="ctrl.render()" ng-model-onblur />
+            </div>
+
 			<div class="gf-form" max-width-25>				
                                 <label class="gf-form-label width-5">Name</label>
                                 <input type="text" class="input-small gf-form-input " ng-model="sensor.name" ng-change="ctrl.render()" ng-model-onblur />
