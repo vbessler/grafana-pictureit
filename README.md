@@ -10,6 +10,14 @@ Allows a user to superimpose measurement displays ontop of picture.
 
 ![PictureIt](https://raw.githubusercontent.com/vbessler/grafana-pictureit/master/src/img/bridge_strains.png?raw=true) 
 
+
+## grafana-cli
+
+```sh
+grafana-cli plugins install bessler-pictureit-panel
+```
+
+
 ### Options  
 
 Each measurement display is linked to a metric through the metrics name or alias.  If the metric returns a series of values then the last values is displayed.
